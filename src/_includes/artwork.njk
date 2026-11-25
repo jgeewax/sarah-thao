@@ -1,0 +1,84 @@
+---
+layout: base.njk
+bodyClass: page-artwork
+---
+{%- set prev = collections.artworks | getPreviousCollectionItem(page) %}
+{%- set next = collections.artworks | getNextCollectionItem(page) %}
+{%- set first = collections.artworks | first %}
+{%- set last = collections.artworks | last %}
+{%- if not prev %}{% set prev = last %}{% endif %}
+{%- if not next %}{% set next = first %}{% endif %}
+<article class="artwork">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/work/" class="link-back">All work</a>
+    </nav>
+
+    <div class="artwork-grid">
+      <div class="artwork-gallery" data-gallery>
+        {%- for img in images %}
+        <figure class="artwork-figure{% if loop.first %} artwork-figure--main{% endif %}">
+          <a href="/artworks/{{ page.fileSlug }}/{{ img.src }}" data-zoom data-caption="{{ title }}{% if img.caption %}, {{ img.caption | lower }}{% endif %}" aria-label="Enlarge image{% if img.caption %}: {{ img.caption }}{% endif %}">
+            <img src="/artworks/{{ page.fileSlug }}/{{ img.src }}" alt="{{ img.alt }}" sizes="(min-width: 1320px) 740px, (min-width: 900px) 56vw, 88vw"{% if loop.first %} loading="eager" fetchpriority="high"{% endif %}>
+          </a>
+          {%- if img.caption %}<figcaption>{{ img.caption }}</figcaption>{% endif %}
+        </figure>
+        {%- endfor %}
+      </div>
+      {%- if images.length > 1 %}
+      <div class="gallery-dots" aria-hidden="true" data-gallery-dots>
+        {%- for img in images %}<span{% if loop.first %} class="is-active"{% endif %}></span>{% endfor %}
+      </div>
+      {%- endif %}
+
+      <aside class="artwork-info">
+        <p class="eyebrow">{{ year }}</p>
+        <h1 class="artwork-title">{{ title }}</h1>
+        <dl class="specs">
+          <div><dt>Medium</dt><dd>{{ medium }}</dd></div>
+          <div><dt>Size</dt><dd>{{ size }}</dd></div>
+          <div><dt>Year</dt><dd>{{ year }}</dd></div>
+          <div>
+            <dt>Availability</dt>
+            <dd>{% if status == "sold" %}<span class="dot dot--sold" aria-hidden="true"></span>Sold{% else %}<span class="dot dot--available" aria-hidden="true"></span>Available{% endif %}</dd>
+          </div>
+        </dl>
+
+        {%- if status != "sold" and price %}
+        <p class="artwork-price">{{ price }}</p>
+        {%- endif %}
+
+        <div class="prose">{{ content | safe }}</div>
+
+        <div class="artwork-actions">
+          {%- if status == "sold" %}
+          <p class="sold-note">This painting has found a home.</p>
+          <a class="btn btn--ghost" href="/contact/?about={{ title | urlencode }}&amp;sold=1">Ask about similar work</a>
+          {%- else %}
+          <a class="btn" href="/contact/?about={{ title | urlencode }}">Enquire about this painting</a>
+          {%- endif %}
+          <button class="share-btn" type="button" data-share data-title="{{ title }}, {{ site.name }}">Share</button>
+        </div>
+      </aside>
+    </div>
+
+    {%- if prev.url != page.url %}
+    <nav class="pager" aria-label="More paintings">
+      <a class="pager-link pager-link--prev" href="{{ prev.url }}">
+        <span class="pager-label">Previous</span>
+        <span class="pager-title">{{ prev.data.title }}</span>
+      </a>
+      <a class="pager-link pager-link--next" href="{{ next.url }}">
+        <span class="pager-label">Next</span>
+        <span class="pager-title">{{ next.data.title }}</span>
+      </a>
+    </nav>
+    {%- endif %}
+  </div>
+</article>
+
+{%- if site.url %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"VisualArtwork","name":{{ title | json | safe }},"artform":"Painting","artMedium":{{ medium | json | safe }},"dateCreated":{{ year | string | json | safe }},"image":{{ (site.url + ogImage) | json | safe }},"url":{{ (site.url + page.url) | json | safe }},"creator":{"@type":"Person","name":{{ site.name | json | safe }}}}
+</script>
+{%- endif %}

@@ -1,0 +1,8 @@
+{
+  "layout": "artwork.njk",
+  "permalink": "/work/{{ page.fileSlug }}/",
+  "eleventyComputed": {
+    "ogImage": "/artworks/{{ page.fileSlug }}/{{ images[0].src }}",
+    "description": "{{ title }}, {{ year }}. {{ medium }}, {{ size }}. An original painting by Sarah Olivia Thảo."
+  }
+}

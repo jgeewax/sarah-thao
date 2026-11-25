@@ -1,0 +1,32 @@
+---
+layout: base.njk
+title: Work
+permalink: /work/
+description: Original oil and acrylic paintings by Sarah Olivia Thảo. Contemporary abstract florals and landscapes, available to buy.
+bodyClass: page-work
+---
+{%- set available = collections.artworks | where("status", "available") %}
+{%- set sold = collections.artworks | where("status", "sold") %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow reveal">Portfolio</p>
+    <h1 class="page-title reveal" style="--d:1">Work</h1>
+    <p class="page-lead reveal" style="--d:2">Original paintings in oil and acrylic. For availability, prices or shipping, please <a href="/contact/">get in touch</a>.</p>
+    <div class="filters" role="group" aria-label="Show paintings" data-filters hidden>
+      <button type="button" data-filter="all" aria-pressed="true">All <span>{{ collections.artworks | length }}</span></button>
+      <button type="button" data-filter="available" aria-pressed="false">Available <span>{{ available | length }}</span></button>
+      <button type="button" data-filter="sold" aria-pressed="false">Sold <span>{{ sold | length }}</span></button>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" aria-label="Paintings">
+  <div class="wrap">
+    <div class="gallery-grid" data-grid>
+      {%- for artwork in collections.artworks %}
+      {% include "partials/card.njk" %}
+      {%- endfor %}
+    </div>
+    <p class="empty-note" data-empty hidden>Nothing here just now. <a href="/contact/">Ask about new work</a>.</p>
+  </div>
+</section>

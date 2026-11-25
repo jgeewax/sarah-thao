@@ -1,0 +1,17 @@
+{
+  "name": "Sarah Olivia Thảo",
+  "tagline": "Contemporary abstract paintings of florals and landscapes",
+  "description": "Sarah Olivia Thảo is a contemporary abstract painter working in oil and acrylic. Paintings of florals and landscapes that explore colour, texture and movement — seeking a feeling of energising calm.",
+  "url": "",
+  "locale": "en_GB",
+  "studio": "Singapore",
+  "email": {
+    "user": "saraholiviathao",
+    "domain": "gmail.com"
+  },
+  "instagram": {
+    "handle": "saraholiviathao",
+    "url": "https://www.instagram.com/saraholiviathao/"
+  },
+  "formAction": "https://formspree.io/f/YOUR_FORM_ID"
+}
