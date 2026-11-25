@@ -2,14 +2,16 @@
 
 A fast, static portfolio site built with [Eleventy](https://www.11ty.dev/) and hosted free on GitHub Pages.
 
-```
+**Live at <https://jgeewax.github.io/sarah-thao/>.** Every push to `main` rebuilds and publishes it (progress in the **Actions** tab).
+
+```text
 src/
   _data/site.json          ← name, email, Instagram, contact-form address, domain
   artworks/<painting>/     ← one folder per painting: photos + index.md
   index.njk                ← home page
   work.njk                 ← portfolio grid (All / Available / Sold)
   about.njk, contact.njk, privacy.md
-  assets/                  ← CSS, JavaScript, fonts, logo
+  assets/                  ← CSS, JavaScript, fonts, logo (motion.js / motion.css = the animations)
 ```
 
 ## Preview on your computer
@@ -77,8 +79,21 @@ Until then, the form tells visitors to email instead. Spam protection (a hidden 
    - `www` → **CNAME** → `<username>.github.io`
    - the bare domain (`@`) → **A** records `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`, and optionally **AAAA** records `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`
 3. Once the DNS check passes (minutes to a few hours), tick **Enforce HTTPS**.
-4. Put the domain in `src/_data/site.json` as `"url": "https://www.example.com"` (no trailing slash). This turns on link previews for social media, a sitemap and search-engine metadata.
+4. Change `url` in `src/_data/site.json` from `https://jgeewax.github.io/sarah-thao` to the new domain, e.g. `"url": "https://www.example.com"` (no trailing slash). It's used for link previews on social media, the sitemap and search-engine metadata. Links inside the site adjust by themselves.
 5. Recommended: verify the domain under your GitHub account's **Settings → Pages** so no one else can claim it.
+
+## The animations
+
+All of the motion lives in two files, `src/assets/js/motion.js` and `src/assets/css/motion.css`, separate from the code the site needs to function.
+
+- **Opening sequence** (home page): six brush strokes paint a twilight, the SoT signature writes itself, then it's wiped away to reveal the site. It plays once per visit, when the home page is the first page someone lands on, and any click, key press or scroll skips it. **To watch it again, add `?intro` to the address**, e.g. `http://localhost:8080/?intro`.
+- **Paint-in**: the first time a page is seen in a visit, paintings appear stroke by stroke. After that they simply show, so browsing stays quick.
+- **Page changes**: a painting glides between the grid and its own page (Chrome, Edge and Safari; other browsers just load the page normally).
+- **Details**: tilt and highlight on hover, a "View" cursor badge, headlines rising word by word, the marquee, drifting colour in the hero.
+
+Visitors whose device is set to *reduce motion* get none of this: everything just appears.
+
+To change the opening's colours or strokes, edit the `composition` list in `motion.js` (positions are fractions of the screen; colours are hue, saturation, lightness). To remove the opening entirely, delete the `intro-cover` block in `src/_includes/base.njk`.
 
 ## Fonts and licences
 
