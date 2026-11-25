@@ -18,8 +18,8 @@ bodyClass: page-artwork
       <div class="artwork-gallery" data-gallery>
         {%- for img in images %}
         <figure class="artwork-figure{% if loop.first %} artwork-figure--main{% endif %}">
-          <a href="/artworks/{{ page.fileSlug }}/{{ img.src }}" data-zoom data-caption="{{ title }}{% if img.caption %}, {{ img.caption | lower }}{% endif %}" aria-label="Enlarge image{% if img.caption %}: {{ img.caption }}{% endif %}">
-            <img src="/artworks/{{ page.fileSlug }}/{{ img.src }}" alt="{{ img.alt }}" sizes="(min-width: 1320px) 740px, (min-width: 900px) 56vw, 88vw"{% if loop.first %} loading="eager" fetchpriority="high"{% endif %}>
+          <a href="/artworks/{{ page.fileSlug }}/{{ img.src }}" data-zoom data-cursor="Zoom" data-caption="{{ title }}{% if img.caption %}, {{ img.caption | lower }}{% endif %}" aria-label="Enlarge image{% if img.caption %}: {{ img.caption }}{% endif %}">
+            <img src="/artworks/{{ page.fileSlug }}/{{ img.src }}" alt="{{ img.alt }}" sizes="(min-width: 1320px) 740px, (min-width: 900px) 56vw, 88vw"{% if loop.first %} loading="eager" fetchpriority="high" style="view-transition-name: art-{{ page.fileSlug }}"{% endif %}>
           </a>
           {%- if img.caption %}<figcaption>{{ img.caption }}</figcaption>{% endif %}
         </figure>
@@ -33,7 +33,7 @@ bodyClass: page-artwork
 
       <aside class="artwork-info">
         <p class="eyebrow">{{ year }}</p>
-        <h1 class="artwork-title">{{ title }}</h1>
+        <h1 class="artwork-title" data-split>{{ title }}</h1>
         <dl class="specs">
           <div><dt>Medium</dt><dd>{{ medium }}</dd></div>
           <div><dt>Size</dt><dd>{{ size }}</dd></div>

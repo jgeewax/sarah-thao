@@ -3,22 +3,28 @@ layout: base.njk
 bodyClass: page-home
 ---
 {%- set hero = collections.artworks | first %}
+{%- set heroSlug = hero.page.fileSlug %}
 <section class="hero">
+  <span class="wash wash--rose" aria-hidden="true"></span>
+  <span class="wash wash--sage" aria-hidden="true"></span>
+  <span class="wash wash--mauve" aria-hidden="true"></span>
   <div class="wrap hero-grid">
     <div class="hero-text">
-      <p class="eyebrow reveal" style="--d:0"><span><span class="hide-sm">Contemporary </span>abstract painter · {{ site.studio }}</span></p>
-      <h1 class="hero-title reveal" style="--d:1"><span>Sarah Olivia</span> <em>Thảo</em></h1>
-      <p class="hero-lead reveal" style="--d:2">Oil and acrylic paintings of florals and landscapes, exploring the relationship between nature and emotion in search of an <em>energising calm</em>.</p>
-      <div class="hero-actions reveal" style="--d:3">
+      <p class="eyebrow" data-hero style="--d:0"><span><span class="hide-sm">Contemporary </span>abstract painter · {{ site.studio }}</span></p>
+      <h1 class="hero-title"><span class="line">Sarah Olivia</span> <em class="line">Thảo</em></h1>
+      <p class="hero-lead" data-hero style="--d:3">Oil and acrylic paintings of florals and landscapes, exploring the relationship between nature and emotion in search of an <em class="swash">energising calm<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7C30 2 58 11 98 6S160 2 198 7" pathLength="1"/></svg></em>.</p>
+      <div class="hero-actions" data-hero style="--d:4">
         <a class="btn" href="/work/">View the work</a>
         <a class="link-arrow" href="/contact/">Enquiries</a>
       </div>
     </div>
-    <figure class="hero-art reveal" style="--d:2">
+    <figure class="hero-art" data-parallax="0.07">
       <a href="{{ hero.url }}">
-        <img src="/artworks/{{ hero.page.fileSlug }}/{{ hero.data.images[0].src }}" alt="{{ hero.data.images[0].alt }}" sizes="(min-width: 1320px) 560px, (min-width: 860px) 44vw, 92vw" loading="eager" fetchpriority="high">
+        <span class="art" data-paint="{{ heroSlug }}" data-tilt data-cursor="View">
+          <img src="/artworks/{{ heroSlug }}/{{ hero.data.images[0].src }}" alt="{{ hero.data.images[0].alt }}" sizes="(min-width: 1320px) 560px, (min-width: 860px) 44vw, 92vw" loading="eager" fetchpriority="high" style="view-transition-name: art-{{ heroSlug }}">
+        </span>
       </a>
-      <figcaption><em>{{ hero.data.title }}</em>, {{ hero.data.year }} · {{ hero.data.medium }}</figcaption>
+      <figcaption data-hero style="--d:6"><em>{{ hero.data.title }}</em>, {{ hero.data.year }} · {{ hero.data.medium }}</figcaption>
     </figure>
   </div>
 </section>
@@ -28,7 +34,7 @@ bodyClass: page-home
     <header class="section-head">
       <div>
         <p class="eyebrow reveal">Selected work</p>
-        <h2 class="section-title reveal" id="featured-title">Recent paintings</h2>
+        <h2 class="section-title" id="featured-title" data-split>Recent paintings</h2>
       </div>
       <a class="link-arrow reveal" href="/work/">See all work</a>
     </header>
@@ -43,18 +49,23 @@ bodyClass: page-home
 </section>
 
 <section class="section texture" aria-labelledby="texture-title">
+  <div class="marquee" data-marquee aria-hidden="true">
+    <div class="marquee-track">
+      <span>Florals</span><i></i><em>Landscapes</em><i></i><span>Oil &amp; acrylic</span><i></i><em>Energising calm</em><i></i><span>Britain</span><i></i><em>Singapore</em><i></i>
+    </div>
+  </div>
   <div class="wrap texture-grid">
     <div class="texture-text">
       <p class="eyebrow reveal">Up close</p>
-      <h2 class="section-title reveal" id="texture-title">Colour, texture <em>&amp;</em> movement</h2>
+      <h2 class="section-title" id="texture-title" data-split>Colour, texture <em>&amp;</em> movement</h2>
       <p class="reveal">Up close, the surface is half the story: layered, sculpted strokes of oil and acrylic that catch the light and pull you into the painting.</p>
       <a class="link-arrow reveal" href="/about/">About the work</a>
     </div>
-    <figure class="texture-figure texture-figure--a reveal">
+    <figure class="texture-figure texture-figure--a" data-unveil data-parallax="0.05">
       <img src="/artworks/jaded/jaded-detail.jpg" alt="Close-up of thick, sculpted impasto strokes in pearl white, mint and plum." sizes="(min-width: 960px) 30vw, 46vw">
       <figcaption>Detail, <em>Jaded</em></figcaption>
     </figure>
-    <figure class="texture-figure texture-figure--b reveal" style="--d:1">
+    <figure class="texture-figure texture-figure--b" data-unveil data-parallax="-0.06" style="--d:1">
       <img src="/artworks/rouge-and-wild-flowers/rouge-and-wild-flowers-detail.jpg" alt="Close-up of short, layered brushstrokes in green, yellow and lilac against burgundy." sizes="(min-width: 960px) 30vw, 46vw">
       <figcaption>Detail, <em>Rouge &amp; Wild Flowers</em></figcaption>
     </figure>
@@ -63,7 +74,7 @@ bodyClass: page-home
 
 <section class="section places" aria-labelledby="places-title">
   <div class="wrap places-grid">
-    <h2 class="places-title reveal" id="places-title">Between the meadows of Britain <em>and</em> the tropical gardens of Singapore.</h2>
+    <h2 class="places-title" id="places-title" data-split>Between the meadows of Britain <em>and</em> the tropical gardens of Singapore.</h2>
     <div class="places-text">
       <p class="reveal">I grew up among the rolling countryside, farms and meadows of Britain. Today my studio is in Singapore, surrounded by vibrant tropical botanicals.</p>
       <p class="reveal">My paintings draw on the contrast between these two homes, and on the places I discover along the way.</p>
@@ -74,9 +85,9 @@ bodyClass: page-home
 
 <section class="section cta" aria-labelledby="cta-title">
   <div class="wrap cta-inner">
-    <img class="cta-mark" src="/assets/img/monogram-large.png" alt="" width="627" height="640" loading="lazy" eleventy:ignore>
+    <img class="cta-mark" src="/assets/img/monogram-large.png" alt="" width="627" height="640" loading="lazy" data-spin="0.014" eleventy:ignore>
     <p class="eyebrow eyebrow--center reveal">Enquiries</p>
-    <h2 class="cta-title reveal" id="cta-title">Interested in a painting for your home?</h2>
+    <h2 class="cta-title" id="cta-title" data-split>Interested in a painting for your home?</h2>
     <p class="cta-text reveal">For available work, questions about a piece, or anything else, I’d love to hear from you.</p>
     <a class="btn reveal" href="/contact/">Get in touch</a>
   </div>

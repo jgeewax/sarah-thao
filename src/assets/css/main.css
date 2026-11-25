@@ -361,30 +361,6 @@ p { margin: 0 0 1.1em; text-wrap: pretty; }
   padding: clamp(1.5rem, 4vw, 3rem) 0 clamp(4rem, 9vw, 8rem);
   overflow-x: clip; /* let the colour washes drift vertically without a hard edge */
 }
-/* soft washes of colour, like the edges of a twilight sky */
-.hero::before,
-.hero::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  border-radius: 50%;
-  pointer-events: none;
-}
-.hero::before {
-  width: min(70vw, 900px);
-  aspect-ratio: 1;
-  right: -14%;
-  top: -22%;
-  background: radial-gradient(closest-side, rgba(226, 178, 191, 0.5), rgba(226, 178, 191, 0) 72%);
-}
-.hero::after {
-  width: min(60vw, 720px);
-  aspect-ratio: 1;
-  left: -18%;
-  bottom: -30%;
-  background: radial-gradient(closest-side, rgba(127, 164, 139, 0.28), rgba(127, 164, 139, 0) 72%);
-}
-
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
@@ -399,8 +375,6 @@ p { margin: 0 0 1.1em; text-wrap: pretty; }
   letter-spacing: -0.035em;
   margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
 }
-.hero-title span { display: block; }
-.hero-title em { display: inline-block; padding-right: 0.08em; }
 .hero-lead {
   max-width: 31ch;
   font-size: var(--step-1);
@@ -453,7 +427,6 @@ p { margin: 0 0 1.1em; text-wrap: pretty; }
 }
 .card:hover { color: var(--ink); }
 .card-media { display: flex; justify-content: center; align-items: flex-end; }
-.card-media picture { display: contents; }
 .card-media img {
   width: auto;
   max-height: min(64vh, 540px);
@@ -485,6 +458,7 @@ p { margin: 0 0 1.1em; text-wrap: pretty; }
 
 .texture {
   position: relative;
+  padding-top: 0;
   background: var(--rouge-ink);
   color: #f2e6e8;
   overflow: hidden;
@@ -493,6 +467,7 @@ p { margin: 0 0 1.1em; text-wrap: pretty; }
 .texture h2 em { color: var(--rose); }
 .texture a:hover { color: var(--rose); }
 .texture-grid {
+  padding-top: clamp(4rem, 9vw, 8rem);
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(1.25rem, 3vw, 2.75rem);

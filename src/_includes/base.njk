@@ -25,8 +25,36 @@
   <link rel="preload" href="/assets/fonts/be-vietnam-pro-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/fonts.css">
   <link rel="stylesheet" href="/assets/css/main.css">
-  <script>document.documentElement.classList.add("js")</script>
+  <link rel="stylesheet" href="/assets/css/motion.css">
+  <script>
+  /* Runs before first paint: decides whether animations play at all (never when the device asks for
+     reduced motion), whether this page's entrances were already seen this visit, and whether to play
+     the opening sequence (home page, first page of a visit; add ?intro to the address to replay it). */
+  (function () {
+    var d = document, r = d.documentElement, c = r.classList;
+    c.add("js");
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    c.add("motion");
+    try {
+      var s = sessionStorage, replay = /[?&]intro\b/.test(location.search);
+      if (!replay && s.getItem("sot:" + location.pathname)) c.add("seen");
+      {% if page.url == "/" %}if (replay || !s.getItem("sot:visited")) c.add("intro");{% endif %}
+      s.setItem("sot:visited", "1");
+      /* arriving back from a painting's page: keep that painting visible so it can glide into place */
+      var m = /\/work\/([\w-]+)\/?$/.exec((d.referrer || "").split(/[?#]/)[0]);
+      if (m) {
+        r.setAttribute("data-from", m[1]);
+        var st = d.createElement("style");
+        st.textContent = '.motion [data-paint="' + m[1] + '"] img{opacity:1!important}';
+        d.head.appendChild(st);
+      }
+    } catch (e) {}
+    /* safety net: if the animation script never arrives, show everything */
+    setTimeout(function () { if (!window.__motion) c.remove("motion", "intro"); }, 4000);
+  })();
+  </script>
   <script src="/assets/js/main.js" defer></script>
+  <script src="/assets/js/motion.js" defer></script>
   {%- if page.url == "/" %}
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Person","name":{{ site.name | json | safe }},"jobTitle":"Artist","description":{{ site.description | json | safe }},"sameAs":[{{ site.instagram.url | json | safe }}]{% if site.url %},"url":{{ site.url | json | safe }}{% endif %}}
@@ -34,6 +62,13 @@
   {%- endif %}
 </head>
 <body class="{{ bodyClass }}">
+  {%- if page.url == "/" %}
+  <div class="intro-cover" data-intro aria-hidden="true">
+    <canvas class="intro-canvas"></canvas>
+    <canvas class="intro-sig"></canvas>
+    <img class="intro-sig-src" src="/assets/img/monogram-large.png" alt="" width="627" height="640" eleventy:ignore>
+  </div>
+  {%- endif %}
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header" data-header>

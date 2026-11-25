@@ -1,10 +1,13 @@
 {#- Gallery card. Expects `artwork` (a collection item) in scope. -#}
 {%- set a = artwork.data %}
-<a class="card reveal" href="{{ artwork.url }}" data-status="{{ a.status }}">
+{%- set slug = artwork.page.fileSlug %}
+<a class="card" href="{{ artwork.url }}" data-status="{{ a.status }}">
   <div class="card-media">
-    <img src="/artworks/{{ artwork.page.fileSlug }}/{{ a.images[0].src }}" alt="{{ a.images[0].alt }}" sizes="(min-width: 1100px) 400px, (min-width: 700px) 45vw, 92vw">
+    <span class="art" data-paint="{{ slug }}" data-tilt data-cursor="View">
+      <img src="/artworks/{{ slug }}/{{ a.images[0].src }}" alt="{{ a.images[0].alt }}" sizes="(min-width: 1100px) 400px, (min-width: 700px) 45vw, 92vw" style="view-transition-name: art-{{ slug }}">
+    </span>
   </div>
-  <div class="card-body">
+  <div class="card-body reveal">
     <div class="card-row">
       <h3 class="card-title">{{ a.title }}<span class="card-year">, {{ a.year }}</span></h3>
       {%- if a.status == "sold" %}
